@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ff6f9f">
+<title>یه سؤال ازت دارم، حدیثه ❤️</title>
+<style>
+:root{--pink:#ff6f9f;--deep:#c52d68;--ink:#54243a;--soft:#fff2f7}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Tahoma,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 15%,#ffe0eb 0,transparent 35%),linear-gradient(135deg,#fff8fb,#ffe7f0);display:grid;place-items:center;padding:18px;overflow-x:hidden}
+main{width:min(100%,560px);background:#ffffffdf;border:1px solid #ffffff;border-radius:28px;padding:clamp(22px,6vw,38px);box-shadow:0 18px 60px #b83c6b20;text-align:center;position:relative;overflow:hidden}
+main:before,main:after{content:"♥";position:absolute;color:#ffb4cc;opacity:.25;font-size:72px;pointer-events:none}
+main:before{top:8px;left:15px}main:after{bottom:0;right:16px}
+.kicker{color:var(--deep);font-size:13px;letter-spacing:.3px}
+h1{font-size:clamp(25px,6vw,34px);margin:12px 0;color:#a9275b}
+p{line-height:2;font-size:17px}
+.name{font-weight:bold;color:#c52d68}
+.progress{height:7px;background:#f9d9e5;border-radius:20px;overflow:hidden;margin:22px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#ff9fbd,#d83b77);transition:width .3s}
+.counter{font-size:12px;color:#a66b83}
+.question{min-height:130px;display:grid;place-items:center;font-size:clamp(19px,4.8vw,24px);font-weight:bold;line-height:2;padding:8px 0}
+.actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:18px;min-height:58px}
+button{font:inherit;border:0;border-radius:999px;padding:13px 26px;cursor:pointer;transition:transform .2s,opacity .2s,background .2s;box-shadow:0 7px 18px #b83c6b20}
+button:focus-visible{outline:3px solid #7d2a50;outline-offset:3px}
+.yes{background:linear-gradient(135deg,#ff83a9,#e83d7b);color:white;font-weight:bold}
+.no{background:#fff;color:#a13b65;border:1px solid #f2b9cd}
+.secondary{background:#fff0f5;color:#9e2c5b}
+.timer{font-size:40px;background:#fff0f5;color:#bd3269;padding:13px 25px}
+input[type=time]{font:inherit;border:1px solid #efb7cc;border-radius:14px;padding:13px;background:white;color:#682844;direction:ltr}
+.hidden{display:none!important}
+.note{font-size:12px;color:#9a7182;margin-top:20px}
+.heart{position:fixed;bottom:-30px;animation:float 7s linear infinite;opacity:.4;pointer-events:none}
+@keyframes float{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.signature{font-weight:bold;color:#bd3269;margin-top:22px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">یک پیام کوچولو، با کلی حرف توی دلش 💌</div>
+  <section id="intro">
+    <h1>یه سؤال ازت دارم…</h1>
+    <p><span class="name">سیده حدیثه احمدی مقدم</span> عزیزم،<br>حاضری چندتا سؤال از این دلِ شیطون بشنوی؟</p>
+    <button class="yes" id="start">بزن بریم ❤️</button>
+  </section>
+
+  <section id="quiz" class="hidden" aria-live="polite">
+    <div class="counter" id="counter"></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="question" id="question"></div>
+    <div class="actions" id="actions"></div>
+    <div class="note" id="hint">قول می‌دم سؤال‌ها کوتاه باشن… تقریباً! 😄</div>
+  </section>
+
+  <section id="time" class="hidden">
+    <h1>پس ساعت قرارمون؟ ⏱️</h1>
+    <p>یه ساعت انتخاب کن تا برای دیدنت ذوق کنم 🌹</p>
+    <input id="meetingTime" type="time" aria-label="ساعت قرار">
+    <div class="actions"><button class="yes" id="confirmTime">همین ساعت خوبه ❤️</button></div>
+    <p class="note">انتخاب ساعت یعنی پیشنهاد؛ هماهنگی نهایی با رضایت هر دومونه.</p>
+  </section>
+
+  <section id="finish" class="hidden">
+    <div style="font-size:48px">💗🌹💗</div>
+    <h1>روشنایی زندگیم…</h1>
+    <p>روشنایی زندگیم،شدیدا منتظرت میمونم تا صداتو پشت گوشی با عزت نفس گوش بدم و پیام هاتو واسه آرامش قلبم جواب بدم</p>
+    <p id="chosen" class="name"></p>
+    <p class="signature">تو قلب منی،ارادتمند تو مهدی رجبی🌹</p>
+    <button class="secondary" id="restart">از اول ببینیم؟</button>
+  </section>
+</main>
+<script>
+const questions = [
+"ازم خسته شدی ک ن پیام میدی ن خبری میگیری ازم؟",
+"نکنه چون مرفین رو ترک کردی داری منم ترک میکنی؟🥹",
+"زندگی بدون من بهت خوش میگذره نه؟حتما لبخند رو لباته ک منو یادت نی حالمو نمیپرسی🥹",
+"اون آهنگه رو گوش دادی ک میگه دیش دیرین دین\nرو صورت نداری هیچ ریش و سبیلی،ساندمو بگم جیش میرینی🤌😂؟",
+"دلم تنگ شده برات بی معرفت،بیام لباتو بخورم؟",
+"موقعیت داری بیام تا خود صبح هارد رکورد؟هم تخت بشکنه هم کمر؟",
+"میشه تو نقطه ای ک هستی یهو ظاهر بشم و همین الان یهویی و همونجا تا ته بکنم توش نفست بند بیاد؟",
+"بهم زنگی میزنی،پیام میدی ک از دوریت نمیرم؟",
+"قول میدی؟قول قول قول؟"
+];
+let index=0, yesScale=1, noScale=1;
+const $=id=>document.getElementById(id);
+function show(id){["intro","quiz","time","finish"].forEach(x=>$(x).classList.toggle("hidden",x!==id))}
+function render(){
+  show("quiz");
+  $("counter").textContent=`سؤال ${index+1} از ۱۰`;
+  $("bar").style.width=((index+1)/10*100)+"%";
+  $("question").textContent=questions[index];
+  $("actions").innerHTML="";
+  yesScale=1; noScale=1;
+  const yes=document.createElement("button"); yes.className="yes"; yes.textContent="آره 😍"; yes.style.transform="scale(1)";
+  yes.addEventListener("click",()=>{index++; if(index===9){show("time");$("bar").style.width="100%";}else render();});
+  const no=document.createElement("button"); no.className="no"; no.textContent="نه 🥺"; no.style.transform="scale(1)";
+  no.addEventListener("click",()=>{
+    yesScale=Math.min(1.65,yesScale+.12); noScale=Math.max(.72,noScale-.08);
+    yes.style.transform=`scale(${yesScale})`; no.style.transform=`scale(${noScale})`;
+    $("hint").textContent="عه! دکمه آره داره ذوق می‌کنه بزرگ می‌شه 😄 (ولی نه هنوز قابل انتخابه)";
+  });
+  $("actions").append(yes,no);
+}
+$("start").onclick=()=>{index=0;render()};
+$("confirmTime").onclick=()=>{
+  const t=$("meetingTime").value;
+  if(!t){$("meetingTime").focus();return;}
+  $("chosen").textContent=`ساعت پیشنهادی تو برای قرار: ${t} 🕰️`;
+  show("finish");
+};
+$("restart").onclick=()=>{index=0;$("meetingTime").value="";show("intro")};
+for(let i=0;i<7;i++){const h=document.createElement("span");h.className="heart";h.textContent="♥";h.style.left=(Math.random()*100)+"%";h.style.animationDelay=(Math.random()*7)+"s";h.style.fontSize=(14+Math.random()*20)+"px";document.body.appendChild(h)}
+</script>
+</body>
+</html>
